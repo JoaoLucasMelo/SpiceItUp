@@ -1,15 +1,10 @@
 <template>
-  <header>
-    <Navbar />
-  </header>
-  <main>
-    <router-view />
-  </main>
-  <footer>
-    <div class="bg-dark text-light text-center p-4">
-      Made with 💖 by CodeWorks
+  <main class="container-fluid background">
+    <div class="row">
+      <router-view />
     </div>
-  </footer>
+  </main>
+  <footer></footer>
 </template>
 
 <script>
@@ -26,5 +21,12 @@ export default {
 </script>
 <style lang="scss">
 @import "./assets/scss/main.scss";
-
+.background {
+  background: url(https://images.unsplash.com/photo-1495195129352-aeb325a55b65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2076&q=80)
+    no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 </style>

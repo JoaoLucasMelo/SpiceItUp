@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS recipes(
   title TEXT NOT NULL,
   subtitle TEXT NOT NULL,
   category TEXT NOT NULL,
+  imgUrl TEXT NOT NULL,
   creatorId VARCHAR(255) NOT NULL,
   FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';
@@ -49,9 +50,9 @@ CREATE TABLE IF NOT EXISTS favorites(
 ) default charset utf8 COMMENT '';
 
 INSERT INTO recipes
-(title, subtitle, category, creatorId)
+(title, subtitle, category, imgUrl, creatorId)
 VALUES
-("First Recipe", "First Subtitle", "First Category", "619afeeffa6f61641d753992");
+("First Recipe", "First Subtitle", "First Category", "https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=449&q=80", "619afeeffa6f61641d753992");
 
 INSERT INTO ingredients
 (name, quantity, recipeId)
@@ -59,7 +60,7 @@ VALUES
 ("First Recipe", 5, 2);
 
 INSERT INTO steps
-(step, body, recipeId)
+(stepNumber, body, recipeId)
 VALUES
 (1, "First Step", 1);
 

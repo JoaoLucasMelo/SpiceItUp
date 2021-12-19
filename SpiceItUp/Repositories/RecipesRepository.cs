@@ -41,9 +41,9 @@ namespace SpiceItUp.Repositories
     {
       string sql = @"
       INSERT INTO recipes
-      (title, subtitle, category, creatorId)
+      (title, subtitle, category, imgUrl, creatorId)
       VALUES
-      (@Title, @Subtitle, @Category, @CreatorId);
+      (@Title, @Subtitle, @Category, @ImgUrl, @CreatorId);
       SELECT LAST_INSERT_ID()
       ;";
       int id = _db.ExecuteScalar<int>(sql, newRecipe);

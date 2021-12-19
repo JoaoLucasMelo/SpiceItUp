@@ -59,6 +59,7 @@ namespace SpiceItUp.Controllers
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     public ActionResult<Step> Edit([FromBody] Step updateStep, int id)
     {
       try
@@ -73,6 +74,7 @@ namespace SpiceItUp.Controllers
       }
     }
     [HttpDelete("{id}")]
+    [Authorize]
     public ActionResult<String> Remove(int id)
     {
       try

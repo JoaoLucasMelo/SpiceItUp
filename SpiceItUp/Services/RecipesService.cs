@@ -33,6 +33,7 @@ namespace SpiceItUp.Services
     {
       Recipe oldRecipe = Get(updateRecipe.Id);
       oldRecipe.Title = updateRecipe.Title != null ? updateRecipe.Title : oldRecipe.Title;
+      oldRecipe.ImgUrl = updateRecipe.ImgUrl != null ? updateRecipe.ImgUrl : oldRecipe.ImgUrl;
       oldRecipe.Category = updateRecipe.Category != null ? updateRecipe.Category : oldRecipe.Category;
       oldRecipe.Subtitle = updateRecipe.Subtitle != null ? updateRecipe.Subtitle : oldRecipe.Subtitle;
       return _repo.Edit(oldRecipe);

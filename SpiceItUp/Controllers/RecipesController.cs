@@ -68,6 +68,7 @@ namespace SpiceItUp.Controllers
       }
     }
     [HttpPut("{id}")]
+    [Authorize]
     public ActionResult<Recipe> Edit([FromBody] Recipe updateRecipe, int id)
     {
       try
@@ -82,6 +83,7 @@ namespace SpiceItUp.Controllers
       }
     }
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<ActionResult<String>> Remove(int id)
     {
       try

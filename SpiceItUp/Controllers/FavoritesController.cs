@@ -32,6 +32,7 @@ namespace SpiceItUp.Controllers
       }
     }
     [HttpDelete("{id}")]
+    [Authorize]
     public ActionResult<String> Remove(int id)
     {
       try
