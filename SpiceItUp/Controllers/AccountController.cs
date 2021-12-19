@@ -9,32 +9,47 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SpiceItUp.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class AccountController : ControllerBase
+  [ApiController]
+  [Route("[controller]")]
+  public class AccountController : ControllerBase
+  {
+    private readonly AccountService _accountService;
+    private readonly FavoritesService _fs;
+
+    public AccountController(AccountService accountService, FavoritesService fs)
     {
-        private readonly AccountService _accountService;
-
-        public AccountController(AccountService accountService)
-        {
-            _accountService = accountService;
-        }
-
-        [HttpGet]
-        [Authorize]
-        public async Task<ActionResult<Account>> Get()
-        {
-            try
-            {
-                Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-                return Ok(_accountService.GetOrCreateProfile(userInfo));
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
+      _accountService = accountService;
+      _fs = fs;
     }
+
+    [HttpGet]
+    [Authorize]
+    public async Task<ActionResult<Account>> Get()
+    {
+      try
+      {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        return Ok(_accountService.GetOrCreateProfile(userInfo));
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+    [HttpGet("{id}/favorites")]
+    public ActionResult<IEnumerable<Favorite>> Get(string id)
+    {
+      try
+      {
+        List<Favorite> favorites = _fs.Get(id);
+        return Ok(favorites);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+  }
 
 
 }

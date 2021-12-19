@@ -62,3 +62,8 @@ INSERT INTO steps
 (step, body, recipeId)
 VALUES
 (1, "First Step", 1);
+
+INSERT INTO favorites
+(accountId, recipeId)
+VALUES
+("619afeeffa6f61641d753992", 2);

@@ -41,6 +41,8 @@ namespace SpiceItUp
       services.AddTransient<IngredientsRepository>();
       services.AddTransient<StepsService>();
       services.AddTransient<StepsRepository>();
+      services.AddTransient<FavoritesService>();
+      services.AddTransient<FavoritesRepository>();
     }
 
     private void ConfigureCors(IServiceCollection services)
