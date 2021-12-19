@@ -15,11 +15,13 @@ namespace SpiceItUp.Controllers
   {
     private readonly RecipesService _rs;
     private readonly IngredientsService _igs;
+    private readonly StepsService _ss;
 
-    public RecipesController(RecipesService rs, IngredientsService igs)
+    public RecipesController(RecipesService rs, StepsService ss, IngredientsService igs)
     {
       _rs = rs;
       _igs = igs;
+      _ss = ss;
     }
 
     [HttpGet]
@@ -100,6 +102,19 @@ namespace SpiceItUp.Controllers
       {
         List<Ingredient> ingredients = _igs.GetByRecipe(id);
         return Ok(ingredients);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+    [HttpGet("{id}/steps")]
+    public ActionResult<IEnumerable<Step>> GetByStep(int id)
+    {
+      try
+      {
+        List<Step> steps = _ss.GetByStep(id);
+        return Ok(steps);
       }
       catch (Exception e)
       {

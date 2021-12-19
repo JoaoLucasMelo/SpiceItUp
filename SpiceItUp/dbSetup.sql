@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS steps(
   id INT NOT NULL AUTO_INCREMENT primary key COMMENT 'primary key',
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
-  step INT NOT NULL,
+  stepNumber INT NOT NULL,
   body TEXT NOT NULL,
   recipeId INT NOT NULL,
   FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE
@@ -57,3 +57,8 @@ INSERT INTO ingredients
 (name, quantity, recipeId)
 VALUES
 ("First Recipe", 5, 2);
+
+INSERT INTO steps
+(step, body, recipeId)
+VALUES
+(1, "First Step", 1);
