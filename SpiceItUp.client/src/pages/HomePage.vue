@@ -55,9 +55,17 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-12">
-        <div class="col-3" v-for="r in recipes" :key="r.id"></div>
+      <div class="col-12 d-flex mt-3">
+        <div class="col-3 p-4" v-for="r in recipes" :key="r.id">
+          <Recipe :recipes="r" />
+          <RecipeModal :recipes="r" />
+        </div>
       </div>
+    </div>
+    <div>
+      <button title="Add Recipe" class="btn grow addbtn">
+        <i class="mdi px-1 mdi-48px mdi-plus"></i>
+      </button>
     </div>
   </div>
 </template>
@@ -111,5 +119,25 @@ export default {
 }
 .btns:hover {
   box-shadow: 0 6px #418848;
+}
+.addbtn {
+  border-radius: 50%;
+  color: white;
+  background-color: #418848;
+  position: absolute;
+  bottom: 25px;
+  right: 25px;
+  box-shadow: 6px 4px 4px rgb(104, 104, 104);
+}
+.grow {
+  transition: all 0.2s ease-in-out;
+}
+.grow:hover {
+  transform: scale(1.05);
+  box-shadow: 9px 6px 6px rgb(104, 104, 104);
+}
+.btn:focus {
+  outline: none;
+  box-shadow: none;
 }
 </style>

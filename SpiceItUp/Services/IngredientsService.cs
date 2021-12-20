@@ -36,7 +36,7 @@ namespace SpiceItUp.Services
     {
       Ingredient oldIngredient = Get(updateIngredient.Id);
       oldIngredient.Name = updateIngredient.Name != null ? updateIngredient.Name : oldIngredient.Name;
-      oldIngredient.Quantity = updateIngredient.Quantity != 0 ? updateIngredient.Quantity : oldIngredient.Quantity;
+      oldIngredient.Quantity = updateIngredient.Quantity != null ? updateIngredient.Quantity : oldIngredient.Quantity;
       return _repo.Edit(oldIngredient);
     }
     internal void Remove(int id)

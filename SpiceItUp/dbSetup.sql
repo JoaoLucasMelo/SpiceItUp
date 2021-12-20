@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS ingredients(
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
   name TEXT NOT NULL,
-  quantity INT NOT NULL,
+  quantity TEXT NOT NULL,
   recipeId INT NOT NULL,
   FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';
@@ -57,7 +57,7 @@ VALUES
 INSERT INTO ingredients
 (name, quantity, recipeId)
 VALUES
-("First Recipe", 5, 2);
+("First Recipe", "5", 2);
 
 INSERT INTO steps
 (stepNumber, body, recipeId)
