@@ -63,10 +63,16 @@
       </div>
     </div>
     <div>
-      <button title="Add Recipe" class="btn grow addbtn">
+      <button
+        data-bs-toggle="modal"
+        data-bs-target="#newRecipe"
+        title="Add Recipe"
+        class="btn grow addbtn"
+      >
         <i class="mdi px-1 mdi-48px mdi-plus"></i>
       </button>
     </div>
+    <NewRecipeModal />
   </div>
 </template>
 
