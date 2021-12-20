@@ -13,6 +13,13 @@ async submit(newRecipe){
   logger.log(res.data)
   AppState.recipes.push(res.data)
 }
+async remove(id){
+  const res = await api.delete("api/recipes/" + id)
+  logger.log(res.data)
+  let newApp = AppState.recipes.filter( r => r.id !== id )
+  AppState.recipes = newApp
+}
+
 }
 
 export const recipesService = new RecipesService()

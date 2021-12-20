@@ -11,6 +11,12 @@ class AccountService {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
     }
   }
+  async getFavorites(){
+    const accountId = AppState.account.id
+    const res = await api.get("account/"+ accountId + "/favorites")
+    logger.log('Favorites',res.data)
+    AppState.favorites = res.data
+  }
 }
 
 export const accountService = new AccountService()

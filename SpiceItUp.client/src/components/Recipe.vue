@@ -10,9 +10,14 @@
         <div class="card category rounded-pill align-self-center">
           <p class="m-0 px-2 font">{{ recipes.category }}</p>
         </div>
-        <div>
-          <button class="btn">
-            <i class="mdi-24px text-white mdi mdi-heart"></i>
+        <div v-if="favorites.find((f) => f.recipeId === recipes.id)">
+          <button title="Add Favorite" class="btn" @click="removeFavorite">
+            <i class="mdi-24px text-white mdi mdi-cards-heart"></i>
+          </button>
+        </div>
+        <div v-else>
+          <button title="Remove Favorite" class="btn" @click="addFavorite">
+            <i class="mdi-24px text-white mdi mdi-cards-heart-outline"></i>
           </button>
         </div>
       </div>
@@ -31,17 +36,38 @@ import { logger } from "../utils/Logger"
 import { ingredientsService } from "../services/IngredientsService"
 import { stepsService } from "../services/StepsService"
 import Pop from "../utils/Pop"
+import { favoritesService } from "../services/FavoritesService"
+import { AppState } from "../AppState"
 export default {
   props: {
-    recipes: { type: Object }
+    recipes: { type: Object },
+    favorites: { type: Array }
   },
   setup(props) {
     return {
       imgUrl: computed(() => `url(${props.recipes.imgUrl})`),
+      account: computed(() => AppState.account),
       async getInfo() {
         try {
           await ingredientsService.getIngredients(props.recipes.id)
           await stepsService.getSteps(props.recipes.id)
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error, 'error')
+        }
+      },
+      async addFavorite() {
+        try {
+          await favoritesService.addFavorite(props.recipes.id, this.account.id)
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error, 'error')
+        }
+      },
+      async removeFavorite() {
+        try {
+          let found = props.favorites.find(f => f.recipeId === props.recipes.id)
+          await favoritesService.removeFavorite(found.id)
         } catch (error) {
           logger.error(error)
           Pop.toast(error, 'error')

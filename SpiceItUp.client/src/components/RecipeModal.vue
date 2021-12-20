@@ -33,6 +33,22 @@
                           {{ recipes.category }}
                         </p>
                       </div>
+                      <div
+                        class="align-self-center mt-4 ms-4"
+                        v-if="recipes.creatorId === account.id"
+                      >
+                        <i
+                          title="Remove Recipe"
+                          @click="remove"
+                          class="
+                            mdi mdi-18px
+                            text-secondary
+                            delete
+                            mdi-trash-can
+                            selectable1
+                          "
+                        ></i>
+                      </div>
                     </div>
                     <div>
                       <i
@@ -86,13 +102,26 @@
 
 <script>
 import { computed } from "@vue/reactivity"
+import { logger } from "../utils/Logger"
+import Pop from "../utils/Pop"
+import { recipesService } from "../services/RecipesService"
+import { AppState } from "../AppState"
 export default {
   props: {
     recipes: { type: Object }
   },
   setup(props) {
     return {
-      imgUrl: computed(() => `url(${props.recipes.imgUrl})`)
+      imgUrl: computed(() => `url(${props.recipes.imgUrl})`),
+      account: computed(() => AppState.account),
+      async remove() {
+        try {
+          await recipesService.remove(props.recipes.id)
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error, 'error')
+        }
+      }
     }
   }
 }
@@ -161,5 +190,8 @@ export default {
   height: 20px;
   width: 20px;
   border-radius: 50%;
+}
+.delete:hover {
+  color: red !important;
 }
 </style>

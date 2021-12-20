@@ -57,12 +57,12 @@
     <div class="row scrollbar">
       <div class="col-12 d-flex flex-wrap mt-3">
         <div class="col-3 p-4" v-for="r in recipes" :key="r.id">
-          <Recipe :recipes="r" />
-          <RecipeModal :recipes="r" />
+          <Recipe :favorites="favorites" :recipes="r" />
+          <RecipeModal :recipes="r" :favorites="favorites" />
         </div>
       </div>
     </div>
-    <ion-content>
+    <div>
       <button
         data-bs-toggle="modal"
         data-bs-target="#newRecipe"
@@ -71,7 +71,7 @@
       >
         <i class="mdi px-1 mdi-48px mdi-plus"></i>
       </button>
-    </ion-content>
+    </div>
     <NewRecipeModal />
   </div>
 </template>
@@ -79,10 +79,11 @@
 <script>
 import { computed } from "@vue/reactivity"
 import { AppState } from "../AppState"
-import { onMounted } from "@vue/runtime-core"
+import { onMounted, watchEffect } from "@vue/runtime-core"
 import { logger } from "../utils/Logger"
 import Pop from "../utils/Pop"
 import { recipesService } from "../services/RecipesService"
+import { accountService } from "../services/AccountService"
 export default {
   setup() {
     onMounted(async () => {
@@ -93,8 +94,17 @@ export default {
         Pop.toast(error, 'error')
       }
     })
+    watchEffect(async () => {
+      try {
+        await accountService.getFavorites()
+      } catch (error) {
+        logger.error(error)
+        Pop.toast(error, 'error')
+      }
+    })
     return {
       account: computed(() => AppState.account),
+      favorites: computed(() => AppState.favorites),
       recipes: computed(() => AppState.recipes)
     }
   }

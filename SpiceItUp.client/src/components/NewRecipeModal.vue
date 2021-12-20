@@ -37,7 +37,7 @@
                         aria-label="Default select example"
                         v-model="add.category"
                       >
-                        <option selected>Select Category</option>
+                        <option selected>Select a Category</option>
                         <option value="Pasta">Pasta</option>
                         <option value="Burguer">Burguer</option>
                         <option value="Salad">Salad</option>
@@ -71,7 +71,9 @@
                       v-model="add.imgUrl"
                     />
                     <div class="text-end mt-3">
-                      <button class="btn text-primary me-4">Cancel</button>
+                      <button @click="close" class="btn text-primary me-4">
+                        Cancel
+                      </button>
                       <button
                         @click="submit"
                         class="btn btn-primary text-white"
@@ -112,6 +114,11 @@ export default {
           logger.error(error)
           Pop.toast(error, 'error')
         }
+      },
+      close() {
+        add.value = {}
+        const modalElem = document.getElementById('newRecipe')
+        Modal.getOrCreateInstance(modalElem).toggle()
       }
     }
   }

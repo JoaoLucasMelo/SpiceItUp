@@ -30,6 +30,7 @@
           justify-content-center
           align-items-center
         "
+        v-if="recipe.creatorId === account.id"
       >
         <form>
           <div class="input-group mb-3">

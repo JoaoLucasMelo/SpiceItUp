@@ -31,7 +31,7 @@
           align-items-center
         "
       >
-        <div class="px-2">
+        <div class="px-2" v-if="recipe.creatorId === account.id">
           <form>
             <div class="input-group mb-3">
               <input
