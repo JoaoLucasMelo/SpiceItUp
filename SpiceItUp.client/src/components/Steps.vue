@@ -16,7 +16,7 @@
           ></i>
         </div>
       </div>
-      <div class="middlecard pt-2">
+      <div class="middlecard scrollbar pt-2">
         <div class="d-flex" v-for="s in steps" :key="s.id">
           <p class="font mx-3 mb-1">{{ s.stepNumber }}.</p>
           <p class="font mb-1">{{ s.body }}</p>
@@ -164,5 +164,21 @@ export default {
 .btn:focus {
   outline: none;
   box-shadow: none;
+}
+.scrollbar {
+  overflow-y: scroll;
+  height: 30vh;
+}
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.scrollbar::-webkit-scrollbar-track {
+  background: #e6f5e8;
+  width: 8px;
+  border-radius: 0px;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #418848;
+  border-radius: 8px;
 }
 </style>

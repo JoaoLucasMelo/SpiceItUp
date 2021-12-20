@@ -54,6 +54,26 @@
                     <Ingredients :recipe="recipes" />
                   </div>
                 </div>
+                <div class="row justify-content-end">
+                  <div
+                    class="
+                      card
+                      published
+                      font
+                      d-flex
+                      flex-row
+                      align-items-center
+                    "
+                  >
+                    <i class="me-2 f-10"> Published by: </i
+                    >{{ recipes.creator.name }}
+                    <img
+                      class="profilepic ms-2"
+                      :src="recipes.creator.picture"
+                      alt=""
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -80,6 +100,14 @@ export default {
 
 
 <style lang="scss" scoped>
+.published {
+  width: 30vh;
+  margin-top: 1vh;
+  margin-right: 4vh;
+  font-size: 2vh;
+  color: #48884f;
+  border: 0;
+}
 .backright {
   background-color: white;
   height: 60vh;
@@ -127,5 +155,11 @@ export default {
   margin-left: 0.9vh;
   margin-bottom: 0.6vh;
   padding-top: 2.5px;
+}
+.profilepic {
+  object-fit: cover;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
 }
 </style>

@@ -95,4 +95,20 @@ export default {
   outline: none;
   box-shadow: none;
 }
+.scrollbar {
+  overflow-y: scroll;
+  height: 76vh;
+}
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.scrollbar::-webkit-scrollbar-track {
+  background: #838383bd;
+  width: 8px;
+  border-radius: 8px;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #418848;
+  border-radius: 8px;
+}
 </style>

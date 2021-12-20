@@ -178,4 +178,20 @@ export default {
 .size {
   width: 17vh;
 }
+.scrollbar {
+  overflow-y: scroll;
+  height: 30vh;
+}
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.scrollbar::-webkit-scrollbar-track {
+  background: #e6f5e8;
+  width: 8px;
+  border-radius: 0px;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #418848;
+  border-radius: 8px;
+}
 </style>

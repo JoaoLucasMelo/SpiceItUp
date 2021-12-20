@@ -54,15 +54,15 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12 d-flex mt-3">
+    <div class="row scrollbar">
+      <div class="col-12 d-flex flex-wrap mt-3">
         <div class="col-3 p-4" v-for="r in recipes" :key="r.id">
           <Recipe :recipes="r" />
           <RecipeModal :recipes="r" />
         </div>
       </div>
     </div>
-    <div>
+    <ion-content>
       <button
         data-bs-toggle="modal"
         data-bs-target="#newRecipe"
@@ -71,7 +71,7 @@
       >
         <i class="mdi px-1 mdi-48px mdi-plus"></i>
       </button>
-    </div>
+    </ion-content>
     <NewRecipeModal />
   </div>
 </template>
@@ -145,5 +145,21 @@ export default {
 .btn:focus {
   outline: none;
   box-shadow: none;
+}
+.scrollbar {
+  overflow-y: scroll;
+  height: 76vh;
+}
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.scrollbar::-webkit-scrollbar-track {
+  background: #838383bd;
+  width: 8px;
+  border-radius: 8px;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #418848;
+  border-radius: 8px;
 }
 </style>
