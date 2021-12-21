@@ -70,8 +70,8 @@ VALUES
 ("619afeeffa6f61641d753992", 2);
 
 SELECT
-r.*,
-a.*
-FROM recipes r WHERE r.title LIKE 'one'
-JOIN accounts a ON r.creatorId = a.id
-;
+  recipe.*,
+  account.*
+FROM
+  recipes recipe
+  JOIN accounts account ON recipe.creatorId = account.id AND recipe.title LIKE '%one%';

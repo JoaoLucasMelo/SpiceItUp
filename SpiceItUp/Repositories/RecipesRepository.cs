@@ -80,10 +80,18 @@ namespace SpiceItUp.Repositories
     internal List<Recipe> Search(string search)
     {
       string sql = @"
-      SELECT * FROM recipes
-      WHERE title LIKE @search
+      SELECT
+      recipe.*,
+      account.*
+      FROM
+      recipes recipe
+      JOIN accounts account ON recipe.creatorId = account.id AND recipe.title LIKE @search
       ;";
-      return _db.Query<Recipe>(sql, new { search }).ToList();
+      return _db.Query<Recipe, Account, Recipe>(sql, (recipe, account) =>
+            {
+              recipe.Creator = account;
+              return recipe;
+            }, splitOn: "id").ToList();
     }
   }
 }

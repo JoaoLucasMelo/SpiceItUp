@@ -18,7 +18,7 @@ namespace SpiceItUp.Controllers
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Recipe>> Search(string search)
+    public ActionResult<IEnumerable<Recipe>> Get(string search)
     {
       try
       {
