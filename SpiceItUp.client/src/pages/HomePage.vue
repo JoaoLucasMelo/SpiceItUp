@@ -24,18 +24,26 @@
           </div>
         </div>
         <div class="card elevation-3 d-flex flex-row">
-          <button @click="all" class="border-0 font f-18 m-0 py-1 px-5 btns">
+          <button
+            @click="all"
+            :class="menu === 1 ? 'btnmenufix' : ''"
+            class="border-0 font f-18 m-0 py-1 px-5 btns"
+          >
             Home
           </button>
           <button
             @click="myRecipes"
+            :class="menu === 2 ? 'btnmenufix' : ''"
             class="border-0 font f-18 m-0 py-1 px-4 btns"
+            :disabled="!user.isAuthenticated"
           >
             My Recipes
           </button>
           <button
             @click="myFavorites"
+            :class="menu === 3 ? 'btnmenufix' : ''"
             class="border-0 font f-18 m-0 py-1 px-5 btns"
+            :disabled="!user.isAuthenticated"
           >
             Favorites
           </button>
@@ -51,6 +59,7 @@
             justify-content-center
             profilecard
           "
+          v-if="user.isAuthenticated"
         >
           <div
             v-if="user.isAuthenticated"
@@ -64,8 +73,23 @@
               <p class="m-0 ms-2 font">{{ account.email }}</p>
             </div>
           </div>
-          <div v-if="!user.isAuthenticated" class="">
-            <button @click="login" class="btn btn-outline-primary">
+        </div>
+        <div
+          class="
+            card
+            elevation-3
+            mt-2
+            d-flex
+            justify-content-center
+            profilecard1
+          "
+          v-if="!user.isAuthenticated"
+        >
+          <div>
+            <p class="font m-0 text-center">Login and start Sharing!</p>
+          </div>
+          <div class="text-center">
+            <button @click="login" class="btn text-white btn-primary pt-1">
               Login
             </button>
           </div>
@@ -78,6 +102,47 @@
           <Recipe :favorites="favorites" :recipes="r" />
           <RecipeModal :recipes="r" :favorites="favorites" />
         </div>
+      </div>
+    </div>
+    <div>
+      <div
+        :class="user.isAuthenticated ? 'sortbtn' : 'sortbtn1'"
+        class="btn-group dropup sortbtn"
+      >
+        <button
+          type="button"
+          class="btn rounded sort pt-1 font"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Category
+        </button>
+        <ul class="dropdown-menu font">
+          <li>
+            <a @click="sortByAll" class="dropdown-item selectable1">All</a>
+          </li>
+          <li>
+            <a @click="sortBy(0)" class="dropdown-item selectable1">Pasta</a>
+          </li>
+          <li>
+            <a @click="sortBy(1)" class="dropdown-item selectable1">Burguer</a>
+          </li>
+          <li>
+            <a @click="sortBy(2)" class="dropdown-item selectable1">Salad</a>
+          </li>
+          <li>
+            <a @click="sortBy(3)" class="dropdown-item selectable1">Soup</a>
+          </li>
+          <li>
+            <a @click="sortBy(4)" class="dropdown-item selectable1">Fish</a>
+          </li>
+          <li>
+            <a @click="sortBy(5)" class="dropdown-item selectable1">Beef</a>
+          </li>
+          <li>
+            <a @click="sortBy(6)" class="dropdown-item selectable1">Other</a>
+          </li>
+        </ul>
       </div>
     </div>
     <div v-if="user.isAuthenticated">
@@ -127,12 +192,14 @@ export default {
       favorites: computed(() => AppState.favorites),
       recipes: computed(() => AppState.recipes),
       user: computed(() => AppState.user),
+      menu: computed(() => AppState.menu),
       async login() {
         AuthService.loginWithPopup()
       },
       async myRecipes() {
         try {
-          await recipesService.myRecipes()
+          await this.all()
+          recipesService.myRecipes()
         } catch (error) {
           logger.error(error)
           Pop.toast(error, 'error')
@@ -148,7 +215,47 @@ export default {
       },
       async myFavorites() {
         try {
-          await recipesService.myFavorites()
+          await this.all()
+          recipesService.myFavorites()
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error, 'error')
+        }
+      },
+      async sortBy(number) {
+        try {
+          if (this.menu === 1) {
+            await recipesService.getAll()
+            recipesService.sortBy(number)
+          }
+          else if (this.menu === 3) {
+            await recipesService.getAll()
+            recipesService.myFavorites()
+            recipesService.sortBy(number)
+          }
+          else {
+            await recipesService.getAll()
+            recipesService.myRecipes()
+            recipesService.sortBy(number)
+          }
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error, 'error')
+        }
+      },
+      async sortByAll() {
+        try {
+          if (this.menu === 1) {
+            await recipesService.getAll()
+          }
+          else if (this.menu === 3) {
+            await recipesService.getAll()
+            recipesService.myFavorites()
+          }
+          else {
+            await recipesService.getAll()
+            recipesService.myRecipes()
+          }
         } catch (error) {
           logger.error(error)
           Pop.toast(error, 'error')
@@ -172,6 +279,10 @@ export default {
   width: 36vh;
   height: 10vh;
 }
+.profilecard1 {
+  width: 20vh;
+  height: 15vh;
+}
 .textcenter {
   font-size: 5vh;
   margin-top: 4vh;
@@ -186,6 +297,10 @@ export default {
 .btns:hover {
   box-shadow: 0 6px #418848;
 }
+.btnmenufix {
+  background-color: white;
+  box-shadow: 0 6px #418848;
+}
 .addbtn {
   border-radius: 50%;
   color: white;
@@ -194,6 +309,28 @@ export default {
   bottom: 25px;
   right: 25px;
   box-shadow: 6px 4px 4px rgb(104, 104, 104);
+}
+.sortbtn {
+  border-radius: 50%;
+  color: white;
+  background-color: #418848;
+  position: absolute;
+  bottom: 130px;
+  right: 25px;
+}
+.sortbtn1 {
+  border-radius: 50%;
+  color: white;
+  background-color: #418848;
+  position: absolute;
+  bottom: 30px;
+  right: 25px;
+}
+
+.sort {
+  color: white;
+  background-color: #418848;
+  box-shadow: 5px 3px 3px rgb(104, 104, 104);
 }
 .grow {
   transition: all 0.2s ease-in-out;

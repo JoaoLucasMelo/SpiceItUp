@@ -45,6 +45,7 @@
                         <option value="Soup">Soup</option>
                         <option value="Fish">Fish</option>
                         <option value="Beef">Beef</option>
+                        <option value="Other">Other</option>
                       </select>
                     </div>
                   </div>

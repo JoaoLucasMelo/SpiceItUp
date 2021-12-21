@@ -51,5 +51,9 @@ namespace SpiceItUp.Services
       _repo.Remove(id);
     }
 
+    internal List<Recipe> Search(string search)
+    {
+      return _repo.Search(search);
+    }
   }
 }

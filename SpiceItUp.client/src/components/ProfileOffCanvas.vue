@@ -86,7 +86,7 @@
             </div>
           </form>
         </div>
-        <div>
+        <div class="text-center mt-3">
           <button @click="logout" class="btn btn-outline-danger">Logout</button>
         </div>
       </div>

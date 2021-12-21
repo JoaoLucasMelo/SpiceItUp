@@ -6,7 +6,7 @@ class RecipesService{
 async getAll(){
   const res = await api.get('api/recipes')
   AppState.recipes = res.data
-  logger.log(AppState.recipes)
+  AppState.menu = 1
 }
 async submit(newRecipe){
   const res = await api.post("api/recipes", newRecipe)
@@ -18,23 +18,29 @@ async remove(id){
   logger.log(res.data)
   let newApp = AppState.recipes.filter( r => r.id !== id )
   AppState.recipes = newApp
+
 }
 
 async myRecipes(){
-  this.getAll
   let myRec = AppState.recipes.filter(f => f.creatorId === AppState.account.id )
   AppState.recipes = myRec
+  AppState.menu = 2
 }
 async myFavorites(){
-  this.getAll
   let favorites = AppState.favorites
   let newApp = []
  for (let i = 0; i < favorites.length; i++) {
    let id = favorites[i].recipeId;
    const found = AppState.recipes.find( r => r.id === id)
-   newApp.push(found)
+   if(found){
+   newApp.push(found)}
   }
  AppState.recipes = newApp
+ AppState.menu = 3
+}
+sortBy(number){
+  let sort = AppState.recipes.filter(r => r.category === AppState.categories[number])
+  AppState.recipes = sort
 }
 }
 

@@ -69,12 +69,21 @@ namespace SpiceItUp.Repositories
       return updatedRecipe;
     }
 
+
     internal void Remove(int id)
     {
       string sql = @"
       DELETE FROM recipes WHERE id = @id LIMIT 1
       ;";
       _db.Execute(sql, new { id });
+    }
+    internal List<Recipe> Search(string search)
+    {
+      string sql = @"
+      SELECT * FROM recipes
+      WHERE title LIKE @search
+      ;";
+      return _db.Query<Recipe>(sql, new { search }).ToList();
     }
   }
 }
