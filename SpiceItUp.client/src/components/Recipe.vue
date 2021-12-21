@@ -10,20 +10,26 @@
         <div class="card category rounded-pill align-self-center">
           <p class="m-0 px-2 font">{{ recipes.category }}</p>
         </div>
-        <div v-if="favorites.find((f) => f.recipeId === recipes.id)">
+        <div
+          v-if="
+            favorites.find((f) => f.recipeId === recipes.id) &&
+            user.isAuthenticated
+          "
+        >
           <button title="Add Favorite" class="btn" @click="removeFavorite">
-            <i class="mdi-24px text-white mdi mdi-cards-heart"></i>
+            <i class="mdi-24px text-danger mdi mdi-cards-heart"></i>
           </button>
         </div>
-        <div v-else>
+        <div v-else-if="user.isAuthenticated">
           <button title="Remove Favorite" class="btn" @click="addFavorite">
             <i class="mdi-24px text-white mdi mdi-cards-heart-outline"></i>
           </button>
         </div>
+        <div class="placement" v-else></div>
       </div>
       <div class="card blurycards border-0 m-0 rounded-0">
         <p class="title font mb-0">{{ recipes.title }}</p>
-        <p class="subtitle font">{{ recipes.subtitle }}</p>
+        <p class="subtitle font textover">{{ recipes.subtitle }}</p>
       </div>
     </div>
   </div>
@@ -38,6 +44,7 @@ import { stepsService } from "../services/StepsService"
 import Pop from "../utils/Pop"
 import { favoritesService } from "../services/FavoritesService"
 import { AppState } from "../AppState"
+import { Modal } from "bootstrap"
 export default {
   props: {
     recipes: { type: Object },
@@ -47,6 +54,7 @@ export default {
     return {
       imgUrl: computed(() => `url(${props.recipes.imgUrl})`),
       account: computed(() => AppState.account),
+      user: computed(() => AppState.user),
       async getInfo() {
         try {
           await ingredientsService.getIngredients(props.recipes.id)
@@ -80,6 +88,9 @@ export default {
 
 
 <style lang="scss" scoped>
+.placement {
+  min-height: 45px;
+}
 .cardback {
   height: 33vh;
   min-width: 30vh;
@@ -102,6 +113,10 @@ export default {
   font-size: 2vh;
   margin-left: 1vh;
   margin-top: 0.5vh;
+  max-width: 35vh;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .category {
   height: 3.2vh;

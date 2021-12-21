@@ -20,6 +20,22 @@ async remove(id){
   AppState.recipes = newApp
 }
 
+async myRecipes(){
+  this.getAll
+  let myRec = AppState.recipes.filter(f => f.creatorId === AppState.account.id )
+  AppState.recipes = myRec
+}
+async myFavorites(){
+  this.getAll
+  let favorites = AppState.favorites
+  let newApp = []
+ for (let i = 0; i < favorites.length; i++) {
+   let id = favorites[i].recipeId;
+   const found = AppState.recipes.find( r => r.id === id)
+   newApp.push(found)
+  }
+ AppState.recipes = newApp
+}
 }
 
 export const recipesService = new RecipesService()

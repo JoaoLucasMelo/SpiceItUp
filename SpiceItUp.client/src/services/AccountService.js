@@ -17,6 +17,11 @@ class AccountService {
     logger.log('Favorites',res.data)
     AppState.favorites = res.data
   }
+  async editAccount(data){
+    const res = await api.put('/account', data)
+    logger.log(res.data)
+    AppState.account = res.data
+}
 }
 
 export const accountService = new AccountService()

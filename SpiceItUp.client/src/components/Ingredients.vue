@@ -16,7 +16,7 @@
           ></i>
         </div>
       </div>
-      <div class="middlecard pt-2">
+      <div class="middlecard scrollbar pt-2">
         <div class="d-flex" v-for="i in ingredients" :key="i.id">
           <p class="font mx-3 mb-1">{{ i.quantity }}</p>
           <p class="font mb-1">{{ i.name }}</p>
@@ -32,7 +32,7 @@
         "
       >
         <div class="px-2" v-if="recipe.creatorId === account.id">
-          <form>
+          <form @submit.prevent="addIngredient">
             <div class="input-group mb-3">
               <input
                 type="text"
@@ -40,6 +40,8 @@
                 placeholder="Add an ingredient"
                 aria-label="Ingredient"
                 v-model="add.name"
+                maxlength="15"
+                required
               />
               <input
                 type="text"
@@ -47,13 +49,14 @@
                 placeholder="Qty"
                 aria-label="Quantity"
                 v-model="add.quantity"
+                required
+                maxlength="4"
               />
               <div class="input-group-append">
                 <button
                   title="Add Ingredient"
-                  @click="addIngredient"
                   class="btn whiteback border-0"
-                  type="button"
+                  type="submit"
                 >
                   <i class="mdi mdi-18px text-primary mdi-plus"></i>
                 </button>
@@ -78,7 +81,7 @@
           ></i>
         </div>
       </div>
-      <div class="middlecard pt-2">
+      <div class="middlecard scrollbar pt-2">
         <div class="d-flex" v-for="i in ingredients" :key="i.id">
           <i
             @click="removeIngredient(i.id)"

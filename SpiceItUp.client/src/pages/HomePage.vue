@@ -24,16 +24,24 @@
           </div>
         </div>
         <div class="card elevation-3 d-flex flex-row">
-          <button class="border-0 font f-18 m-0 py-1 px-5 btns">Home</button>
-          <button class="border-0 font f-18 m-0 py-1 px-4 btns">
+          <button @click="all" class="border-0 font f-18 m-0 py-1 px-5 btns">
+            Home
+          </button>
+          <button
+            @click="myRecipes"
+            class="border-0 font f-18 m-0 py-1 px-4 btns"
+          >
             My Recipes
           </button>
-          <button class="border-0 font f-18 m-0 py-1 px-5 btns">
+          <button
+            @click="myFavorites"
+            class="border-0 font f-18 m-0 py-1 px-5 btns"
+          >
             Favorites
           </button>
         </div>
       </div>
-      <div class="col-3 d-flex justify-content-center">
+      <div class="col-3 d-flex justify-content-end">
         <div
           class="
             card
@@ -44,12 +52,22 @@
             profilecard
           "
         >
-          <div class="d-flex">
+          <div
+            v-if="user.isAuthenticated"
+            data-bs-toggle="offcanvas"
+            href="#offcanvasExample"
+            class="d-flex selectable1"
+          >
             <img class="ms-1 rounded profile" :src="account.picture" alt="" />
             <div class="d-flex flex-column justify-content-center">
               <p class="m-0 ms-2 font">{{ account.name }}</p>
               <p class="m-0 ms-2 font">{{ account.email }}</p>
             </div>
+          </div>
+          <div v-if="!user.isAuthenticated" class="">
+            <button @click="login" class="btn btn-outline-primary">
+              Login
+            </button>
           </div>
         </div>
       </div>
@@ -62,7 +80,7 @@
         </div>
       </div>
     </div>
-    <div>
+    <div v-if="user.isAuthenticated">
       <button
         data-bs-toggle="modal"
         data-bs-target="#newRecipe"
@@ -73,6 +91,7 @@
       </button>
     </div>
     <NewRecipeModal />
+    <ProfileOffCanvas />
   </div>
 </template>
 
@@ -84,6 +103,7 @@ import { logger } from "../utils/Logger"
 import Pop from "../utils/Pop"
 import { recipesService } from "../services/RecipesService"
 import { accountService } from "../services/AccountService"
+import { AuthService } from "../services/AuthService"
 export default {
   setup() {
     onMounted(async () => {
@@ -105,7 +125,35 @@ export default {
     return {
       account: computed(() => AppState.account),
       favorites: computed(() => AppState.favorites),
-      recipes: computed(() => AppState.recipes)
+      recipes: computed(() => AppState.recipes),
+      user: computed(() => AppState.user),
+      async login() {
+        AuthService.loginWithPopup()
+      },
+      async myRecipes() {
+        try {
+          await recipesService.myRecipes()
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error, 'error')
+        }
+      },
+      async all() {
+        try {
+          await recipesService.getAll()
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error, 'error')
+        }
+      },
+      async myFavorites() {
+        try {
+          await recipesService.myFavorites()
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error, 'error')
+        }
+      }
     }
   }
 }
@@ -117,6 +165,8 @@ export default {
 }
 .profile {
   height: 9vh;
+  width: 9vh;
+  object-fit: cover;
 }
 .profilecard {
   width: 36vh;

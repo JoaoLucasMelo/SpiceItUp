@@ -11,7 +11,31 @@
         <div class="modal-content border-0">
           <div class="modal-body d-flex justify-content-center">
             <div class="card modalstyle d-flex flex-row">
-              <div class="col-4 backrecipe"></div>
+              <div class="col-4 backrecipe">
+                <div
+                  class="text-end me-2"
+                  v-if="favorites.find((f) => f.recipeId === recipes.id)"
+                >
+                  <button
+                    title="Add Favorite"
+                    class="btn"
+                    @click="removeFavorite"
+                  >
+                    <i class="mdi-36px text-danger mdi mdi-cards-heart"></i>
+                  </button>
+                </div>
+                <div class="text-end me-2" v-else-if="user.isAuthenticated">
+                  <button
+                    title="Remove Favorite"
+                    class="btn"
+                    @click="addFavorite"
+                  >
+                    <i
+                      class="mdi-36px text-white mdi mdi-cards-heart-outline"
+                    ></i>
+                  </button>
+                </div>
+              </div>
               <div class="col-8 backright">
                 <div>
                   <div class="d-flex justify-content-between">
@@ -105,15 +129,18 @@ import { computed } from "@vue/reactivity"
 import { logger } from "../utils/Logger"
 import Pop from "../utils/Pop"
 import { recipesService } from "../services/RecipesService"
+import { favoritesService } from "../services/FavoritesService"
 import { AppState } from "../AppState"
 export default {
   props: {
-    recipes: { type: Object }
+    recipes: { type: Object },
+    favorites: { type: Array }
   },
   setup(props) {
     return {
       imgUrl: computed(() => `url(${props.recipes.imgUrl})`),
       account: computed(() => AppState.account),
+      user: computed(() => AppState.user),
       async remove() {
         try {
           await recipesService.remove(props.recipes.id)
@@ -121,7 +148,25 @@ export default {
           logger.error(error)
           Pop.toast(error, 'error')
         }
+      },
+      async addFavorite() {
+        try {
+          await favoritesService.addFavorite(props.recipes.id, this.account.id)
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error, 'error')
+        }
+      },
+      async removeFavorite() {
+        try {
+          let found = props.favorites.find(f => f.recipeId === props.recipes.id)
+          await favoritesService.removeFavorite(found.id)
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error, 'error')
+        }
       }
+
     }
   }
 }
@@ -130,7 +175,7 @@ export default {
 
 <style lang="scss" scoped>
 .published {
-  width: 30vh;
+  width: 38vh;
   margin-top: 1vh;
   margin-right: 4vh;
   font-size: 2vh;
@@ -187,11 +232,15 @@ export default {
 }
 .profilepic {
   object-fit: cover;
-  height: 20px;
-  width: 20px;
+  height: 25px;
+  width: 25px;
   border-radius: 50%;
 }
 .delete:hover {
   color: red !important;
+}
+.btn:focus {
+  outline: none;
+  box-shadow: none;
 }
 </style>

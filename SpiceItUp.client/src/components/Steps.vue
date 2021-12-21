@@ -19,7 +19,7 @@
       <div class="middlecard scrollbar pt-2">
         <div class="d-flex" v-for="s in steps" :key="s.id">
           <p class="font mx-3 mb-1">{{ s.stepNumber }}.</p>
-          <p class="font mb-1">{{ s.body }}</p>
+          <p class="font mb-1 bodywid">{{ s.body }}</p>
         </div>
       </div>
       <div
@@ -30,9 +30,8 @@
           justify-content-center
           align-items-center
         "
-        v-if="recipe.creatorId === account.id"
       >
-        <form>
+        <form @submit.prevent="addStep" v-if="recipe.creatorId === account.id">
           <div class="input-group mb-3">
             <input
               type="text"
@@ -40,13 +39,10 @@
               placeholder="Add a step"
               aria-label="Step"
               v-model="add.body"
+              required
             />
             <div class="input-group-append">
-              <button
-                @click="addStep"
-                class="btn whiteback border-0"
-                type="button"
-              >
+              <button class="btn whiteback border-0" type="submit">
                 <i class="mdi mdi-18px text-primary mdi-plus"></i>
               </button>
             </div>
@@ -69,7 +65,7 @@
           ></i>
         </div>
       </div>
-      <div class="middlecard pt-2">
+      <div class="middlecard scrollbar pt-2">
         <div class="d-flex" v-for="s in steps" :key="s.id">
           <i
             @click="removeStep(s.id)"
@@ -77,7 +73,7 @@
             class="mdi mdi-close text-danger ms-3 selectable1"
           ></i>
           <p class="font mx-3 mb-1">{{ s.stepNumber }}.</p>
-          <p class="font mb-1">{{ s.body }}</p>
+          <p class="font mb-1 bodywid2">{{ s.body }}</p>
         </div>
       </div>
       <div
@@ -181,5 +177,11 @@ export default {
 .scrollbar::-webkit-scrollbar-thumb {
   background-color: #418848;
   border-radius: 8px;
+}
+.bodywid {
+  width: 28vh !important;
+}
+.bodywid2 {
+  width: 24vh !important;
 }
 </style>

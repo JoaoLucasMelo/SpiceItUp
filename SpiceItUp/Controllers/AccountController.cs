@@ -49,6 +49,21 @@ namespace SpiceItUp.Controllers
         return BadRequest(e.Message);
       }
     }
+    [HttpPut]
+    [Authorize]
+    public async Task<ActionResult<Account>> Edit([FromBody] Account editData)
+    {
+      try
+      {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        Account newAccount = _accountService.Edit(editData, userInfo.Email);
+        return Ok(newAccount);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
   }
 
 

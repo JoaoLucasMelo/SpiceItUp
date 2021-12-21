@@ -27,6 +27,7 @@
                         class="form-control font border-0"
                         placeholder="Enter title..."
                         v-model="add.title"
+                        maxlength="30"
                       />
                     </div>
                     <div class="col-5">
@@ -55,12 +56,15 @@
                       class="form-control font border-0"
                       placeholder="Enter sub title..."
                       v-model="add.subtitle"
+                      maxlength="50"
                     />
                     <div class="d-flex justify-content-between mt-1">
                       <label class="brief font ps-2"
                         >A brief description of the recipe</label
                       >
-                      <label class="brief font pe-2">0/50</label>
+                      <label class="brief font pe-2"
+                        >{{ add.subtitle?.length }}/50</label
+                      >
                     </div>
                     <label class="form-label font mt-2">Image Url</label>
                     <input
