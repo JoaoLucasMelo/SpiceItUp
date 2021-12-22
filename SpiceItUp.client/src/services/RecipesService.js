@@ -42,6 +42,11 @@ sortBy(number){
   let sort = AppState.recipes.filter(r => r.category === AppState.categories[number])
   AppState.recipes = sort
 }
+async querySearch(input){
+  const res = await api.get("api/Query?search=%"+ input +"%")
+  let newArr = res.data
+  AppState.recipes = newArr
+  AppState.menu = 1
 }
-
+}
 export const recipesService = new RecipesService()

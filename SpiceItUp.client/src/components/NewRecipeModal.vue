@@ -64,7 +64,9 @@
                         >A brief description of the recipe</label
                       >
                       <label class="brief font pe-2"
-                        >{{ add.subtitle?.length }}/50</label
+                        >{{
+                          add.subtitle?.length ? add.subtitle?.length : 0
+                        }}/50</label
                       >
                     </div>
                     <label class="form-label font mt-2">Image Url</label>

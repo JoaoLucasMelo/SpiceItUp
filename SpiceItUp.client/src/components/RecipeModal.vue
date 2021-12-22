@@ -131,6 +131,7 @@ import Pop from "../utils/Pop"
 import { recipesService } from "../services/RecipesService"
 import { favoritesService } from "../services/FavoritesService"
 import { AppState } from "../AppState"
+import { Modal } from "bootstrap"
 export default {
   props: {
     recipes: { type: Object },

@@ -9,18 +9,23 @@
       >
         <div class="">
           <div class="input-group mb-3">
-            <input
-              type="text"
-              class="form-control border-2 border-primary font"
-              placeholder="Search Recipes..."
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
-            />
-            <div class="input-group-append">
-              <button class="btn bord btn-primary border-1" type="button">
-                <i class="mdi mdi-18px text-white mdi-magnify"></i>
-              </button>
-            </div>
+            <form @submit.prevent="querySearch">
+              <div class="d-flex">
+                <input
+                  type="text"
+                  class="form-control border-2 border-primary font"
+                  placeholder="Search Recipes..."
+                  aria-label="Recipient's username"
+                  aria-describedby="basic-addon2"
+                  v-model="userInput"
+                />
+                <div class="input-group-append">
+                  <button class="btn bord btn-primary border-1" type="submit">
+                    <i class="mdi mdi-18px text-white mdi-magnify"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
         <div class="card elevation-3 d-flex flex-row">
@@ -161,7 +166,7 @@
 </template>
 
 <script>
-import { computed } from "@vue/reactivity"
+import { computed, ref } from "@vue/reactivity"
 import { AppState } from "../AppState"
 import { onMounted, watchEffect } from "@vue/runtime-core"
 import { logger } from "../utils/Logger"
@@ -171,6 +176,7 @@ import { accountService } from "../services/AccountService"
 import { AuthService } from "../services/AuthService"
 export default {
   setup() {
+    let userInput = ref("")
     onMounted(async () => {
       try {
         await recipesService.getAll()
@@ -188,6 +194,7 @@ export default {
       }
     })
     return {
+      userInput,
       account: computed(() => AppState.account),
       favorites: computed(() => AppState.favorites),
       recipes: computed(() => AppState.recipes),
@@ -256,6 +263,15 @@ export default {
             await recipesService.getAll()
             recipesService.myRecipes()
           }
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error, 'error')
+        }
+      },
+      async querySearch() {
+        try {
+          await recipesService.querySearch(userInput.value)
+          userInput.value = ("")
         } catch (error) {
           logger.error(error)
           Pop.toast(error, 'error')
@@ -358,5 +374,9 @@ export default {
 .scrollbar::-webkit-scrollbar-thumb {
   background-color: #418848;
   border-radius: 8px;
+}
+.form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 </style>
