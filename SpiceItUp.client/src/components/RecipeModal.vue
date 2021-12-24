@@ -10,8 +10,8 @@
       <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content border-0">
           <div class="modal-body d-flex justify-content-center">
-            <div class="card modalstyle d-flex flex-row">
-              <div class="col-4 backrecipe">
+            <div class="card modalstyle d-flex flex-md-row">
+              <div class="col-md-4 backrecipe">
                 <div
                   class="text-end me-2"
                   v-if="favorites.find((f) => f.recipeId === recipes.id)"
@@ -36,7 +36,7 @@
                   </button>
                 </div>
               </div>
-              <div class="col-8 backright">
+              <div class="col-md-8 backright">
                 <div>
                   <div class="d-flex justify-content-between">
                     <div class="d-flex">
@@ -87,10 +87,10 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-6 ps-5 pe-3 pt-2">
+                  <div class="col-md-6 ps-5 pe-3 pt-2">
                     <Steps :recipe="recipes" />
                   </div>
-                  <div class="col-6 pe-5 ps-3 pt-2">
+                  <div class="col-md-6 pe-5 ps-3 pt-2">
                     <Ingredients :recipe="recipes" />
                   </div>
                 </div>
@@ -243,5 +243,7 @@ export default {
 .btn:focus {
   outline: none;
   box-shadow: none;
+}
+@media only screen and (max-width: 500px) {
 }
 </style>

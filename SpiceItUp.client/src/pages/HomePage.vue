@@ -1,11 +1,17 @@
 <template>
   <div class="home col-12">
     <div class="row">
-      <div class="col-4">
+      <div class="col-md-4">
         <img class="image ms-2 mt-2" src="../assets/img/spice.png" alt="" />
       </div>
       <div
-        class="col-5 align-items-center justify-content-end d-flex flex-column"
+        class="
+          col-md-5
+          align-items-center
+          justify-content-end
+          d-flex
+          flex-column
+        "
       >
         <div class="">
           <div class="input-group mb-3">
@@ -32,14 +38,14 @@
           <button
             @click="all"
             :class="menu === 1 ? 'btnmenufix' : ''"
-            class="border-0 font f-18 m-0 py-1 px-5 btns"
+            class="border-0 font f-18 m-0 py-1 px-3 px-md-5 btns"
           >
             Home
           </button>
           <button
             @click="myRecipes"
             :class="menu === 2 ? 'btnmenufix' : ''"
-            class="border-0 font f-18 m-0 py-1 px-4 btns"
+            class="border-0 font f-18 m-0 py-1 px-3 px-md-4 btns"
             :disabled="!user.isAuthenticated"
           >
             My Recipes
@@ -47,14 +53,16 @@
           <button
             @click="myFavorites"
             :class="menu === 3 ? 'btnmenufix' : ''"
-            class="border-0 font f-18 m-0 py-1 px-5 btns"
+            class="border-0 font f-18 m-0 py-1 px-3 px-md-5 btns"
             :disabled="!user.isAuthenticated"
           >
             Favorites
           </button>
         </div>
       </div>
-      <div class="col-3 d-flex justify-content-end">
+      <div
+        class="col-md-3 d-flex justify-content-center justify-content-md-end"
+      >
         <div
           class="
             card
@@ -101,9 +109,9 @@
         </div>
       </div>
     </div>
-    <div class="row scrollbar">
-      <div class="col-12 d-flex flex-wrap mt-3">
-        <div class="col-3 p-4" v-for="r in recipes" :key="r.id">
+    <div class="row scrollbar mt-2">
+      <div class="col-12 d-md-flex flex-wrap mt-3">
+        <div class="col-md-3 p-4" v-for="r in recipes" :key="r.id">
           <Recipe :favorites="favorites" :recipes="r" />
           <RecipeModal :recipes="r" :favorites="favorites" />
         </div>
@@ -378,5 +386,23 @@ export default {
 .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+}
+@media only screen and (max-width: 500px) {
+  .image {
+    height: 14vh;
+  }
+  .profilecard {
+    width: 33vh;
+    height: 8vh;
+  }
+  .profile {
+    height: 6vh;
+    width: 6vh;
+    object-fit: cover;
+  }
+  .scrollbar {
+    overflow-y: scroll;
+    height: 63vh;
+  }
 }
 </style>
