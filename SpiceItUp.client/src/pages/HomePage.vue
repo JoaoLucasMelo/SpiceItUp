@@ -1,6 +1,6 @@
 <template>
   <div class="home col-12">
-    <div class="row">
+    <div class="row pb-2">
       <div class="col-md-4">
         <img class="image ms-2 mt-2" src="../assets/img/spice.png" alt="" />
       </div>
@@ -370,6 +370,20 @@ export default {
 .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+}
+.scrollbar {
+  overflow-y: scroll;
+  height: 74vh;
+}
+.scrollbar::-webkit-scrollbar {
+  width: 7px;
+}
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #418848;
+  border-radius: 10px;
 }
 @media only screen and (max-width: 500px) {
   .image {
