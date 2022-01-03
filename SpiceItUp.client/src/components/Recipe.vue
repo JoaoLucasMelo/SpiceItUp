@@ -2,8 +2,6 @@
   <div class="recipe">
     <div
       @click="getInfo"
-      data-bs-toggle="modal"
-      :data-bs-target="'#a' + recipes.id + 'a'"
       class="card cardback d-flex justify-content-between grow"
     >
       <div class="d-flex justify-content-between">
@@ -16,12 +14,12 @@
             user.isAuthenticated
           "
         >
-          <button title="Add Favorite" class="btn" @click="removeFavorite">
+          <button title="Add Favorite" class="btn" @click.stop="removeFavorite">
             <i class="mdi-24px text-danger mdi mdi-cards-heart"></i>
           </button>
         </div>
         <div v-else-if="user.isAuthenticated">
-          <button title="Remove Favorite" class="btn" @click="addFavorite">
+          <button title="Remove Favorite" class="btn" @click.stop="addFavorite">
             <i class="mdi-24px text-white mdi mdi-cards-heart-outline"></i>
           </button>
         </div>
@@ -57,8 +55,12 @@ export default {
       user: computed(() => AppState.user),
       async getInfo() {
         try {
+          logger.log('getting info');
           await ingredientsService.getIngredients(props.recipes.id)
           await stepsService.getSteps(props.recipes.id)
+          let elm = document.getElementById('a' + props.recipes.id + 'a')
+          logger.log(elm)
+          Modal.getOrCreateInstance(elm).toggle()
         } catch (error) {
           logger.error(error)
           Pop.toast(error, 'error')
