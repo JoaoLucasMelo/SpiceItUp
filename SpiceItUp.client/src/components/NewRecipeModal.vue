@@ -40,7 +40,7 @@
                       >
                         <option selected>Select a Category</option>
                         <option value="Pasta">Pasta</option>
-                        <option value="Burguer">Burguer</option>
+                        <option value="Burger">Burger</option>
                         <option value="Salad">Salad</option>
                         <option value="Soup">Soup</option>
                         <option value="Fish">Fish</option>

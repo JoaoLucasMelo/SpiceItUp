@@ -9,5 +9,5 @@ export const AppState = reactive({
   activeSteps:[],
   favorites:[],
   menu: 1,
-  categories: ["Pasta", "Burguer", "Salad", "Soup", "Fish", "Beef", "Other"]
+  categories: ["Pasta", "Burger", "Salad", "Soup", "Fish", "Beef", "Other"]
 })

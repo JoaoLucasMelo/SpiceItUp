@@ -138,7 +138,7 @@
             <a @click="sortBy(0)" class="dropdown-item selectable1">Pasta</a>
           </li>
           <li>
-            <a @click="sortBy(1)" class="dropdown-item selectable1">Burguer</a>
+            <a @click="sortBy(1)" class="dropdown-item selectable1">Burger</a>
           </li>
           <li>
             <a @click="sortBy(2)" class="dropdown-item selectable1">Salad</a>
