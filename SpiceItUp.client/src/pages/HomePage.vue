@@ -110,7 +110,7 @@
       </div>
     </div>
     <div class="row scrollbar mt-2">
-      <div class="col-12 d-md-flex flex-wrap mt-3">
+      <div class="col-12 d-md-flex flex-wrap selectable1 mt-3">
         <div class="col-md-3 p-4" v-for="r in recipes" :key="r.id">
           <Recipe :favorites="favorites" :recipes="r" />
           <RecipeModal :recipes="r" :favorites="favorites" />
