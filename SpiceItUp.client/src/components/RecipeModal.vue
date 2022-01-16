@@ -132,6 +132,7 @@ import { recipesService } from "../services/RecipesService"
 import { favoritesService } from "../services/FavoritesService"
 import { AppState } from "../AppState"
 import { Modal } from "bootstrap"
+import { Modal } from "bootstrap"
 export default {
   props: {
     recipes: { type: Object },
@@ -145,6 +146,7 @@ export default {
       async remove() {
         try {
           await recipesService.remove(props.recipes.id)
+          Modal.getOrCreateInstance(document.getElementById('a' + props.recipes.id + 'a')).hide()
         } catch (error) {
           logger.error(error)
           Pop.toast(error, 'error')
